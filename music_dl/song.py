@@ -235,6 +235,8 @@ class BasicSong:
             self.logger.error("URL is empty.")
             return
         try:
+            if config.get("lyricsOnly"):
+                return
 
             if os.path.exists(outfile):
                 return

@@ -35,6 +35,7 @@ def init():
         "nomerge": False,
         # 下载歌词 --lyrics
         "lyrics": False,
+        "lyricsOnly": False,
         # 下载封面 --cover
         "cover": False,
         # 一般情况下的headers

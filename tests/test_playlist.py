@@ -15,9 +15,11 @@ import shutil
 def test_playlist():
     config.init()
     config.set('outdir', 'E:\\My Documents\\My Musics\\')
+    # config.set('outdir', 'E:\\test\\')
     config.set('lyrics', True)
+    # config.set('lyricsOnly', True)
     config.set('source', 'netease')
-    config.set('playlist', 'https://music.163.com/playlist?id=2909967264&userid=52794579')
+    config.set('playlist', 'https://music.163.com/playlist?id=4943411818&userid=52794579')
 
     ms = MusicSource()
     songs_list = ms.playlist(config.get("playlist"))
