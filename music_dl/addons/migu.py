@@ -57,7 +57,7 @@ def migu_search(keyword) -> list:
         song.source = "MIGU"
         song.id = item.get("id", "")
         song.title = item.get("name", "")
-        song.singer = "、".join(singers)
+        song.singer = ",".join(singers)
         song.album = item.get("albums", [])[0].get("name", "")
         song.cover_url = item.get("imgItems", [])[0].get("img", "")
         song.lyrics_url = item.get("lyricUrl", item.get("trcUrl", ""))

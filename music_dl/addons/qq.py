@@ -124,7 +124,7 @@ def qq_search(keyword) -> list:
         song.source = "qq"
         song.id = item.get("songid", "")
         song.title = item.get("songname", "")
-        song.singer = "、".join(singers)
+        song.singer = ",".join(singers)
         song.album = item.get("albumname", "")
         song.duration = item.get("interval", 0)
         song.size = round(item.get("size128", 0) / 1048576, 2)

@@ -79,6 +79,9 @@ class NeteaseSong(BasicSong):
         super(NeteaseSong, self).__init__()
 
     def download_lyrics(self):
+        if os.path.exists(self.lyrics_fullname):
+            return
+
         row_data = {"csrf_token": "", "id": self.id, "lv": -1, "tv": -1}
         data = NeteaseApi.encrypted_request(row_data)
 
@@ -149,7 +152,7 @@ def netease_search(keyword) -> list:
             song.source = "netease"
             song.id = item.get("id", "")
             song.title = item.get("name", "")
-            song.singer = "、".join(singers)
+            song.singer = ",".join(singers)
             song.album = item.get("al", {}).get("name", "")
             song.duration = int(item.get("dt", 0) / 1000)
             song.size = round(size / 1048576, 2)
@@ -194,7 +197,7 @@ def netease_playlist(url) -> list:
             song.source = "netease"
             song.id = item.get("id", "")
             song.title = item.get("name", "")
-            song.singer = "、".join(singers)
+            song.singer = ",".join(singers)
             song.album = item.get("al", {}).get("name", "")
             song.duration = int(item.get("dt", 0) / 1000)
             song.size = round(size / 1048576, 2)
@@ -218,7 +221,7 @@ def netease_single(url) -> NeteaseSong:
         song.id = item.get("id", "")
         song.title = item.get("name", "")
         singers = [s.get("name", "") for s in item.get("ar", {})]
-        song.singer = "、".join(singers)
+        song.singer = ",".join(singers)
         song.album = item.get("al", {}).get("name", "")
         song.duration = int(item.get("dt", 0) / 1000)
         song.cover_url = item.get("al", {}).get("picUrl", "")

@@ -189,26 +189,27 @@ class BasicSong:
         """ Full name without suffix, to resolve file name conflicts"""
         outdir = config.get("outdir")
         outfile = os.path.abspath(os.path.join(outdir, self.name))
-        if os.path.exists(outfile):
-            name, ext = self.name.rsplit(".", 1)
-            names = [
-                x for x in os.listdir(outdir) if x.startswith(name) and x.endswith(ext)
-            ]
-            names = [x.rsplit(".", 1)[0] for x in names]
-            suffixes = [x.replace(name, "") for x in names]
-            # filter suffixes that match ' (x)' pattern
-            suffixes = [
-                x[2:-1] for x in suffixes if x.startswith(" (") and x.endswith(")")
-            ]
-            indexes = [int(x) for x in suffixes if set(x) <= set("0123456789")]
-            idx = 1
-            if indexes:
-                idx += sorted(indexes)[-1]
-            self._fullname = os.path.abspath(
-                os.path.join(outdir, "%s (%d)" % (name, idx))
-            )
-        else:
-            self._fullname = outfile.rpartition(".")[0]
+        self._fullname = outfile.rpartition(".")[0]
+        # if os.path.exists(outfile):
+        #     name, ext = self.name.rsplit(".", 1)
+        #     names = [
+        #         x for x in os.listdir(outdir) if x.startswith(name) and x.endswith(ext)
+        #     ]
+        #     names = [x.rsplit(".", 1)[0] for x in names]
+        #     suffixes = [x.replace(name, "") for x in names]
+        #     # filter suffixes that match ' (x)' pattern
+        #     suffixes = [
+        #         x[2:-1] for x in suffixes if x.startswith(" (") and x.endswith(")")
+        #     ]
+        #     indexes = [int(x) for x in suffixes if set(x) <= set("0123456789")]
+        #     idx = 1
+        #     if indexes:
+        #         idx += sorted(indexes)[-1]
+        #     self._fullname = os.path.abspath(
+        #         os.path.join(outdir, "%s (%d)" % (name, idx))
+        #     )
+        # else:
+        #     self._fullname = outfile.rpartition(".")[0]
 
     @property
     def song_fullname(self):
@@ -234,6 +235,10 @@ class BasicSong:
             self.logger.error("URL is empty.")
             return
         try:
+
+            if os.path.exists(outfile):
+                return
+
             r = requests.get(
                 url,
                 stream=stream,
