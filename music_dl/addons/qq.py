@@ -9,6 +9,7 @@
 import random
 import base64
 import copy
+import os
 from .. import config
 from ..api import MusicApi
 from ..song import BasicSong
@@ -30,6 +31,8 @@ class QQSong(BasicSong):
         self.mid = ""
 
     def download_lyrics(self):
+        if os.path.exists(self.lyrics_fullname):
+            return
         url = "https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg"
         params = {
             "songmid": self.mid,
